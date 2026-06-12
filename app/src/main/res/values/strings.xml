@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MapBoost</string>
+    <string name="mapboost">MapBoost</string>
+    <string name="hello_world">Welcome to</string>
+    <string name="welcome">WELCOME</string>
+    <string name="welcome_home">Welcome to\nMapBoost</string>
+    <string name="login">LOGIN</string>
+    <string name="signup">SIGN UP</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="create_profile">Create Your Profile</string>
+    <string name="upload_photo">Upload Profile Photo</string>
+    <string name="hint_name">Full Name</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_gender">Gender</string>
+    <string name="hint_phone">Phone Number</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_dob">Date of Birth</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="button_submit">Create Account</string>
+    <string name="button_login">Login</string>
+    <string name="button_update_password">Update Password</string>
+    <string name="hint_new_password">New Password</string>
+    <string name="hint_confirm_new_password">Confirm New Password</string>
+    <string name="already_have_account">Already have an account? Login</string>
+    <string name="no_account_text">Doesn\'t have an account? Register now</string>
+    <string name="remember_me">Remember me</string>
+    <string name="password_requirement">Must be at least 8 characters with letters, numbers, and special characters.</string>
+    <string name="app_logo_description">App logo</string>
+</resources>
