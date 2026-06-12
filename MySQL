@@ -1,0 +1,28 @@
+CREATE DATABASE notifications_db;
+USE notifications_db;
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    fcm_token VARCHAR(255) NOT NULL,
+    location VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO users (username, email, fcm_token, location)
+VALUES
+('Alice', 'alice@example.com', 'abc123token', 'cafe'),
+('Bob', 'bob@example.com', 'xyz456token', 'park'),
+('Charlie', 'charlie@example.com', 'def789token', 'mall');
+
+SELECT username, fcm_token
+FROM users
+WHERE location = 'cafe';
+
+UPDATE users
+SET fcm_token = 'newToken123'
+WHERE email = 'alice@example.com';
+
+DELETE FROM users
+WHERE email = 'bob@example.com';

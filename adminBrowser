@@ -1,0 +1,92 @@
+#frontend
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Notification Panel</title>
+</head>
+<body>
+  <h1>Send Notification</h1>
+  <form id="notifyForm">
+    <label>User Email:</label>
+    <input type="text" id="email" name="email" required><br><br>
+
+    <label>Title:</label>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <label>Message:</label>
+    <textarea id="body" name="body" required></textarea><br><br>
+
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    document.getElementById("notifyForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const title = document.getElementById("title").value;
+      const body = document.getElementById("body").value;
+
+      // Call backend API
+      const response = await fetch("http://localhost:3000/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, title, body })
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    });
+  </script>
+</body>
+</html>
+
+#backend
+const express = require("express");
+const mysql = require("mysql");
+const fetch = require("node-fetch");
+
+const app = express();
+app.use(express.json());
+
+// MySQL connection
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "yourpassword",
+  database: "notifications_db"
+});
+
+// FCM Server Key (from Firebase Console)
+const FCM_SERVER_KEY = "YOUR_FCM_SERVER_KEY";
+
+// API: Send notification to user by email
+app.post("/send", (req, res) => {
+  const { email, title, body } = req.body;
+
+  db.query("SELECT fcm_token FROM users WHERE email = ?", [email], async (err, results) => {
+    if (err) return res.status(500).json({ message: "Database error" });
+    if (results.length === 0) return res.status(404).json({ message: "User not found" });
+
+    const token = results[0].fcm_token;
+
+    // Call FCM API
+    await fetch("https://fcm.googleapis.com/fcm/send", {
+      method: "POST",
+      headers: {
+        "Authorization": "key=" + FCM_SERVER_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        to: token,
+        notification: { title, body }
+      })
+    });
+
+    res.json({ message: "Notification sent successfully!" });
+  });
+});
+
+app.listen(3000, () => console.log("Admin server running on port 3000"));
+
+
