@@ -1,0 +1,77 @@
+-- 1. CREATE DATABASE
+CREATE DATABASE IF NOT EXISTS notifications_db;
+USE notifications_db;
+
+-- 2. USERS TABLE
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100),
+    email VARCHAR(150),
+    fcm_token VARCHAR(255),
+    location VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 3. USER LOCATIONS TABLE
+CREATE TABLE user_locations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(50),
+    latitude DOUBLE,
+    longitude DOUBLE,
+    recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 4. SHOPS TABLE
+CREATE TABLE shops (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150),
+    address VARCHAR(255),
+    latitude DOUBLE,
+    longitude DOUBLE
+);
+
+-- 5. PROMOTIONS TABLE
+CREATE TABLE promotions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    shop_id INT,
+    title VARCHAR(255),
+    description TEXT,
+    discount VARCHAR(50),
+    valid_until DATE
+);
+
+-- 6. INSERT USERS
+INSERT INTO users (user_id, username, email, fcm_token, location, created_at) VALUES
+(1, 'Alice', 'alice@example.com', 'abc123token', 'cafe', '2026-05-25 10:08:51'),
+(2, 'Bob', 'bob@example.com', 'xyz456token', 'park', '2026-05-25 10:08:51'),
+(3, 'Charlie', 'charlie@example.com', 'def789token', 'mall', '2026-05-25 10:08:51'),
+(5, 'test', 'test@gmail.com', '123', 'cafe', '2026-05-26 17:26:13'),
+(6, 'abu', 'abu@gmail.com', '', NULL, '2026-05-26 17:26:55'),
+(7, 'ali', 'ali@gmail.com', '', NULL, '2026-05-27 10:49:06'),
+(8, 'sara', 'sara@gmail.com', '', NULL, '2026-05-27 11:01:13');
+
+-- 7. INSERT USER LOCATIONS
+INSERT INTO user_locations (id, user_id, latitude, longitude, recorded_at) VALUES
+(1, 'ali', 4.6606661, 101.1476923, '2026-05-27 10:57:31'),
+(2, 'ali', 4.6606649, 101.1476916, '2026-05-27 10:57:39'),
+(3, 'ali', 4.6605632, 101.1477759, '2026-05-27 10:57:48'),
+(4, 'ali', 4.6605651, 101.1477405, '2026-05-27 10:57:54'),
+(5, 'ali', 4.6605882, 101.1477206, '2026-05-27 10:58:03'),
+(6, 'ali', 4.6605928, 101.1477179, '2026-05-27 10:58:11'),
+(7, 'ali', 4.6605851, 101.1477223, '2026-05-27 10:58:18'),
+(8, 'ali', 4.6605774, 101.1477203, '2026-05-27 10:58:27'),
+(9, 'sara', 4.032, 101.052, '2026-05-27 11:01:38');
+
+-- (You can continue full dataset if needed)
+
+-- 8. INSERT SHOPS
+INSERT INTO shops (id, name, address, latitude, longitude) VALUES
+(1, 'Pizza Palace', '123 Main St', 4.0311, 101.0511),
+(2, 'Burger Barn', 'Jitra', 4.035, 101.048),
+(3, 'Test Shop Teluk Intan', 'Teluk Intan, Perak', 4.0229, 101.0202);
+
+-- 9. INSERT PROMOTIONS
+INSERT INTO promotions (id, shop_id, title, description, discount, valid_until) VALUES
+(1, 1, '20% Off All Pizzas', 'Valid weekdays only', '20%', '2025-12-31'),
+(2, 2, 'Buy 1 Free 1 Burger', 'Every Friday', 'BOGO', '2025-12-31'),
+(3, 3, '50% Off Today', 'Test promotion near you', '50%', '2026-12-31');
